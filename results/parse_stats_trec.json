@@ -1,0 +1,17 @@
+{
+  "criteria": 367463,
+  "parsed": 142184,
+  "fully_parsed": 82796,
+  "predicates": {
+    "unparsed": 225279,
+    "medication": 27331,
+    "partial": 59388,
+    "condition": 118457,
+    "covered": 10652,
+    "lab": 30945,
+    "age": 187
+  },
+  "trials": 26158,
+  "coverage": 0.3869,
+  "full_coverage": 0.2253
+}
