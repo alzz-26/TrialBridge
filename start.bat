@@ -1,6 +1,6 @@
 @echo off
 REM TrialBridge: double-click to start. Opens http://localhost:8000 in your browser.
-REM First run downloads the demo data (~35 MB) and Python packages (~1 GB). Later runs start in under a minute.
+REM First run downloads the demo data (~15 MB) and Python packages (~1 GB). Later runs start in under a minute.
 cd /d "%~dp0"
 
 if not exist "data\trialbridge.db" (
