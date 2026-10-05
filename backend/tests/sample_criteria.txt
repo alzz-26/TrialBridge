@@ -1,0 +1,20 @@
+Inclusion Criteria:
+
+* Adults aged 18 to 75 years with type 2 diabetes mellitus
+* HbA1c between 7.0% and 10.5%
+* eGFR > 45 mL/min/1.73m2
+* BMI ≥ 25 kg/m2
+* On stable dose of metformin for at least 3 months
+
+Exclusion Criteria:
+
+* History of myocardial infarction, stroke or unstable angina within 6 months prior to screening
+* Type 1 diabetes
+* Pregnant or breastfeeding women
+* ALT or AST > 3 x ULN
+* Current use of strong CYP3A4 inhibitors
+* Uncontrolled hypertension (SBP > 160 mmHg)
+* Any of the following:
+  * Hemoglobin < 10 g/dL
+  * Platelets < 100,000/mm3
+* Any condition that in the opinion of the investigator would interfere with participation
