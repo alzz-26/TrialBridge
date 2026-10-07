@@ -29,6 +29,8 @@ export default function Parser() {
     setRes(await api.parse(t));
   }
   async function load() {
+    if (!nct.trim()) return;
+    setErr(null);
     try {
       const t = await api.trial(nct.trim().toUpperCase());
       setText(t.eligibility);
@@ -45,11 +47,11 @@ export default function Parser() {
         <p className="mb-3 text-sm text-slate-500">
           Free-text eligibility → executable predicates. Highlighted spans show exactly which words produced each predicate.
         </p>
-        <div className="mb-2 flex gap-2">
-          <input value={nct} onChange={(e) => setNct(e.target.value)} placeholder="Load trial by NCT id"
+        <form onSubmit={(e) => { e.preventDefault(); load(); }} className="mb-2 flex gap-2">
+          <input value={nct} onChange={(e) => setNct(e.target.value)} placeholder="Load trial by NCT id, e.g. NCT07442006"
             className="flex-1 rounded-lg border border-slate-200 px-3 py-2 font-mono text-sm outline-none focus:border-brand-500" />
-          <button onClick={load} className="rounded-lg border border-slate-200 px-3 text-sm hover:bg-slate-50">Load</button>
-        </div>
+          <button type="submit" className="rounded-lg border border-slate-200 px-3 text-sm hover:bg-slate-50">Load</button>
+        </form>
         {err && <div className="mb-2 text-sm text-rose-600">{err}</div>}
         <textarea value={text} onChange={(e) => setText(e.target.value)} rows={22}
           className="w-full rounded-lg border border-slate-200 p-3 font-mono text-xs outline-none focus:border-brand-500" />

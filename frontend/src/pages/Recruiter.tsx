@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search, Users } from "lucide-react";
 import { api, type PatientMatch, type TrialCard, type Verdict } from "../api";
 import { Card, CriteriaTable, Expander, ScoreBar, Spinner, VerdictBadge, cx } from "../components";
@@ -10,9 +10,18 @@ export default function Recruiter() {
   const [res, setRes] = useState<{ trial: TrialCard; cohort_size: number; counts: Record<Verdict, number>; results: PatientMatch[] } | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const [searching, setSearching] = useState(false);
+
   async function search() {
-    setTrials((await api.trials(q, 30)).results);
+    setSearching(true);
+    try {
+      setTrials((await api.trials(q, 30)).results);
+    } finally {
+      setSearching(false);
+    }
   }
+
+  useEffect(() => { search(); }, []); // show trials for the default query on first load
 
   async function pick(id: string) {
     setSel(id);
@@ -29,10 +38,16 @@ export default function Recruiter() {
       <Card className="p-4">
         <div className="mb-1 font-semibold">Recruiter view</div>
         <p className="mb-3 text-sm text-slate-500">Pick a trial and screen the whole synthetic cohort against its parsed criteria.</p>
-        <form onSubmit={(e) => { e.preventDefault(); search(); }} className="relative mb-2">
-          <Search size={16} className="absolute left-2.5 top-2.5 text-slate-400" />
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search trials (BM25)"
-            className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-3 text-sm outline-none focus:border-brand-500" />
+        <form onSubmit={(e) => { e.preventDefault(); search(); }} className="mb-2 flex gap-2">
+          <div className="relative flex-1">
+            <Search size={16} className="absolute left-2.5 top-2.5 text-slate-400" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search trials (BM25)"
+              className="w-full rounded-lg border border-slate-200 py-2 pl-8 pr-3 text-sm outline-none focus:border-brand-500" />
+          </div>
+          <button type="submit" disabled={searching}
+            className="rounded-lg bg-brand-600 px-3 text-sm font-medium text-white hover:bg-brand-700 disabled:opacity-60">
+            {searching ? "Searching..." : "Search"}
+          </button>
         </form>
         <ul className="max-h-[560px] divide-y divide-slate-100 overflow-y-auto rounded-lg border border-slate-200">
           {trials.map((t) => (
@@ -43,7 +58,7 @@ export default function Recruiter() {
               </button>
             </li>
           ))}
-          {trials.length === 0 && <li className="p-4 text-center text-sm text-slate-400">Search to list trials</li>}
+          {trials.length === 0 && <li className="p-4 text-center text-sm text-slate-400">{searching ? "Searching..." : "No trials found - try another search"}</li>}
         </ul>
       </Card>
 
